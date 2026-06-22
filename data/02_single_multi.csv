@@ -1,0 +1,7 @@
+coin,tx_type,n_transfers,pct_whole_dollar,pct_mult_10,pct_mult_100
+PYUSD,1_single,1160996,41.87,21.63,6.73
+PYUSD,2_multi,289059,14.35,9.17,6.15
+USDC,1_single,44055729,28.83,18.48,11.88
+USDC,2_multi,58519752,10.43,7.06,4.87
+USDT,1_single,70461151,30.21,18.69,11.74
+USDT,2_multi,50628749,7.19,4.84,3.12

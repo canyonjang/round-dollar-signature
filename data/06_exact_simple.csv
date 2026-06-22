@@ -1,0 +1,7 @@
+coin,exact_class,n_transfers,pct_whole_dollar,pct_mult_10,pct_mult_100
+PYUSD,1_simple_exact,1135160,42.064,21.517,6.385
+PYUSD,2_complex_exact,314895,15.92,10.592,7.433
+USDC,1_simple_exact,33532564,32.338,20.278,12.769
+USDC,2_complex_exact,69042917,11.535,7.929,5.507
+USDT,1_simple_exact,61817281,32.178,19.719,12.233
+USDT,2_complex_exact,59272619,8.497,5.789,3.857
