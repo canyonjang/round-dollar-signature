@@ -27,7 +27,8 @@
 ## 1. 라벨 테이블 업로드
 
 `rds_revision` 옆 ⋮ → **Create table** → Source: **Upload** → `labels_eth_mainnet.csv` 선택 →
-Table 이름 `labels_eth` → Schema **Auto detect** → Advanced options에서 **Header rows to skip = 1** → Create.
+Table 이름 `labels_eth` → Schema는 **자동 감지를 끄고** "텍스트로 수정"에 `address:STRING,category:STRING,name_tag:STRING` 입력 → Advanced options에서 **Header rows to skip = 1** → Create.
+(자동 감지를 쓰면 `0x…` 주소가 숫자(FLOAT64)로 잘못 인식되어 라벨이 매칭되지 않습니다.)
 (Etherscan 태그 공개본 eth-labels, 86,924개 주소: 거래소 30,703 / DeFi·브리지·MEV 19,681 /
 결제대행사 42 / 발행사 14 / 기타 36,484)
 

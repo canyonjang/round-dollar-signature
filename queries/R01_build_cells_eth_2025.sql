@@ -4,7 +4,7 @@
 -- Before running:
 --   1. replace YOUR_PROJECT; create dataset `rds_revision` (location: US)
 --   2. upload data/labels_eth_mainnet.csv as table `rds_revision.labels_eth`
---      (schema auto-detect, header row = 1; columns address, category, name_tag)
+--      (do NOT auto-detect: schema address:STRING,category:STRING,name_tag:STRING; header row = 1)
 --   3. set "Maximum bytes billed" in Query settings and check the dry-run estimate
 --
 -- Sample definition identical to queries 01-07: 2025, value > 0; single = exactly one transfer of
@@ -18,8 +18,9 @@
 --   cpty_dir      : which side carries that label: 'to', 'from', 'both', 'none'
 --   hv            : sender among the 1,000 most active senders or recipient among the 1,000 most
 --                   active recipients in this sample (label-free proxy for hot wallets / bots)
+-- No PARTITION BY on purpose: in the BigQuery sandbox, partitions older than 60 days expire
+-- immediately, which would silently empty a table of 2025 data. The table is small anyway.
 CREATE OR REPLACE TABLE `YOUR_PROJECT.rds_revision.eth_cells2025`
-PARTITION BY DATE_TRUNC(dt, MONTH)
 CLUSTER BY coin, tx_type
 AS
 WITH st AS (
