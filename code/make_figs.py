@@ -57,8 +57,8 @@ for ax,c in zip(axes,ORDER):
     ax.set_ylim(0,60)
 axes[0].set_ylabel("Whole-dollar share (%)")
 axes[1].legend(loc="upper center",bbox_to_anchor=(0.5,-0.32),ncol=2,fontsize=8.5)
-fig.suptitle("Single-transfer whole-dollar shares exceed multi-transfer shares in every size bucket",
-             fontsize=10.5,x=0.02,ha="left")
+fig.suptitle("Whole-dollar share by transfer size, single- vs multi-transfer transactions, Ethereum 2025",
+             fontsize=10.5,x=0.02,ha="left",y=1.03)
 fig.savefig(OUT+"fig2_size_stratified.pdf"); fig.savefig(OUT+"fig2_size_stratified.png"); plt.close(fig)
 
 # ============ FIG 3: placebo digit test (single transfers) ============

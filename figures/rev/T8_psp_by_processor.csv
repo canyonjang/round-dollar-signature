@@ -1,0 +1,6 @@
+processor,transfers,share_pct,whole_pct,cent_pct,excluding_this_whole_pct,excluding_this_cent_pct
+AlphaPo,748935,98.34,14.07,22.75,29.07,98.94
+BitPay,12409,1.63,28.89,99.89,14.08,22.76
+Upay,211,0.03,41.71,53.55,14.31,24.01
+Zovix,27,0.0,14.81,18.52,14.32,24.02
+All processors,761582,100.0,14.32,24.02,,
