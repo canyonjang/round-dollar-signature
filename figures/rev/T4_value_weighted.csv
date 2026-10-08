@@ -1,0 +1,7 @@
+coin,tx_type,n_transfers,count_share_whole_pct,usd_volume_bn,value_share_whole_pct
+PYUSD,1_single,1157761,41.92,45.43,49.43
+PYUSD,2_multi,289049,14.35,17.56,16.05
+USDC,1_single,43757223,28.81,4245.12,46.95
+USDC,2_multi,57487727,10.3,6340.98,9.74
+USDT,1_single,70460960,30.21,3547.83,51.54
+USDT,2_multi,50627349,7.19,2074.38,5.26

@@ -1,0 +1,9 @@
+direct_call,from_contract,to_contract,n,n_whole,n_cent,share_pct,whole_dollar_pct
+False,False,False,1697823,321727,419703,1.64,18.95
+False,False,True,3942114,1667383,1993779,3.82,42.3
+False,True,False,5881309,1332353,2313712,5.7,22.65
+False,True,True,9406607,605524,861774,9.11,6.44
+True,False,False,77117183,28563047,44407451,74.69,37.04
+True,False,True,5198430,1986054,2952699,5.04,38.2
+True,True,False,1834,1085,1564,0.0,59.16
+True,True,True,10,7,7,0.0,70.0

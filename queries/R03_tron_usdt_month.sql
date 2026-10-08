@@ -1,4 +1,5 @@
--- R03 (revision): cross-chain replication on TRON (low-fee, retail-heavy), USDT TRC-20, one month.
+-- R03 (revision): cross-chain replication on TRON (low-fee, retail-heavy), USDT TRC-20, calendar 2025
+-- (same period as the Ethereum sample; about 26 GB per month scanned, ~320 GB for the year).
 -- Output -> data/R03_tron_cells.csv
 -- Cost control: the Google Tron tables are partitioned by MONTH, so one calendar month is the
 -- smallest unit you can be billed for. Check the dry-run estimate; to add months, widen the
@@ -14,8 +15,8 @@ WITH lg AS (
     transaction_hash,
     REGEXP_REPLACE(LOWER(data), r'^0x', '') AS d
   FROM `bigquery-public-data.goog_blockchain_tron_mainnet_us.logs`
-  WHERE block_timestamp >= TIMESTAMP('2025-06-01')
-    AND block_timestamp <  TIMESTAMP('2025-07-01')
+  WHERE block_timestamp >= TIMESTAMP('2025-01-01')
+    AND block_timestamp <  TIMESTAMP('2026-01-01')
     AND ENDS_WITH(LOWER(address), 'a614f803b6fd780986a42c78ec9c7f77e6ded13c')
     AND ENDS_WITH(LOWER(topics[SAFE_OFFSET(0)]),
                   'ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef')

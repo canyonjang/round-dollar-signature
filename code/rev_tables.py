@@ -82,9 +82,26 @@ if a is not None:
     d["g_csd"] = d.coin + "|" + d.size_bucket + "|" + d.day
     col["(3) issuer x size x day FE"] = cell_ols(d, "n", "n_whole", ["single"], absorb="g_csd", cluster="day")
 
-    # (4) value-weighted (each transfer weighted by its USD amount), day FE, day-clustered
-    col["(4) value-weighted"] = cell_ols(d, "sum_amt", "sum_amt_whole", ["single"] + xc + xs,
-                                         absorb="day", cluster="day", nobs=d.n.sum())
+    # (4) value-weighted (each transfer weighted by its USD amount), excluding mint/burn: a single
+    #     erroneous ~$300tn PYUSD mint and burn on 2025-10-15 would otherwise dominate USD weights.
+    c_ = load("R02c_cells_day_endpoint.csv")
+    if c_ is not None:
+        v = prep(c_.groupby(["dt", "coin", "tx_type", "size_bucket"], as_index=False)
+                 [["n", "n_whole", "sum_amt", "sum_amt_whole"]].sum())
+        v["day"] = v.dt.astype(str)
+        add_dummies(v, "coin", ["USDT", "PYUSD"], "coin_"); add_dummies(v, "size_bucket", SIZE_DUMMIES, "sz_")
+        col["(4) value-weighted"] = cell_ols(v, "sum_amt", "sum_amt_whole", ["single"] + xc + xs,
+                                             absorb="day", cluster="day", nobs=v.n.sum())
+        vw_note = "USD value, excl. mint/burn"
+    else:
+        say("[note] R02c not found: column (4) uses month cells from R02b (excl. mint/burn), month FE and clusters")
+        bb = load("R02b_cells_attr.csv")
+        v = prep(bb[bb.cpty_cat != "mint_burn"].groupby(["month", "coin", "tx_type", "size_bucket"], as_index=False)
+                 [["n", "n_whole", "sum_amt", "sum_amt_whole"]].sum())
+        add_dummies(v, "coin", ["USDT", "PYUSD"], "coin_"); add_dummies(v, "size_bucket", SIZE_DUMMIES, "sz_")
+        col["(4) value-weighted"] = cell_ols(v, "sum_amt", "sum_amt_whole", ["single"] + xc + xs,
+                                             absorb="month", cluster="month", nobs=v.n.sum())
+        vw_note = "USD value, excl. mint/burn (month cells)"
 
     terms = ["single"] + xc + xs
     rows = []
@@ -106,8 +123,8 @@ if a is not None:
         "Cells": [f"{r['ncells']:,}" for r in col.values()],
         "Issuer FE / size FE": ["Yes", "Yes", "absorbed", "Yes"],
         "Day FE": ["No", "Yes", "absorbed", "Yes"],
-        "Weights": ["transfers", "transfers", "transfers", "USD value"],
-        "Standard errors": ["HC1"] + [f"clustered by day ({r['nclusters']})" for r in list(col.values())[1:]],
+        "Weights": ["transfers", "transfers", "transfers", vw_note],
+        "Standard errors": ["HC1"] + [f"clustered ({r['nclusters']})" for r in list(col.values())[1:]],
     }
     for k, v in foot.items():
         rows.append({"term": k, **dict(zip(col.keys(), v))})
@@ -115,29 +132,6 @@ if a is not None:
     t1.to_csv(OUT + "T1_revised_table1.csv", index=False)
     say("## T1 Revised Table 1 (coefficients in pp, SE in parentheses)")
     say(t1.to_string(index=False))
-    say()
-
-    # ============================== T4 ==============================
-    g = a.groupby(["coin", "tx_type"])[["n", "n_whole", "sum_amt", "sum_amt_whole"]].sum()
-    t4 = pd.DataFrame({
-        "n_transfers": g.n,
-        "count_share_whole_pct": (g.n_whole / g.n * 100).round(2),
-        "usd_volume_bn": (g.sum_amt / 1e9).round(2),
-        "value_share_whole_pct": (g.sum_amt_whole / g.sum_amt * 100).round(2),
-    }).reset_index()
-    gb = a.groupby(["tx_type", "size_bucket"])[["n", "n_whole", "sum_amt", "sum_amt_whole"]].sum()
-    t4b = pd.DataFrame({"count_share_whole_pct": (gb.n_whole / gb.n * 100).round(2),
-                        "value_share_whole_pct": (gb.sum_amt_whole / gb.sum_amt * 100).round(2),
-                        "usd_volume_share_pct": (gb.sum_amt / a.sum_amt.sum() * 100).round(2)}).reset_index()
-    tot = a[["sum_amt", "sum_amt_whole"]].sum()
-    single_whole_usd = a.loc[a.tx_type == "1_single", "sum_amt_whole"].sum()
-    t4.to_csv(OUT + "T4_value_weighted.csv", index=False)
-    t4b.to_csv(OUT + "T4b_value_weighted_by_size.csv", index=False)
-    say("## T4 Count- vs value-weighted whole-dollar shares")
-    say(t4.to_string(index=False))
-    say(f"Whole-dollar transfers = {tot.sum_amt_whole / tot.sum_amt * 100:.2f}% of all USD volume; "
-        f"whole-dollar SINGLE transfers = {single_whole_usd / tot.sum_amt * 100:.2f}% of all USD volume.")
-    say(t4b.to_string(index=False))
     say()
 
 # ============================== T2 / T3 ==============================
@@ -174,11 +168,37 @@ if b is not None:
         contrast(d, "Single = contract-mediated only (vs multi)",
                  treat=lambda s: (s.tx_type == "2_multi") | ~s.direct_call),
         contrast(d[~lab & ~d.hv & eoa & (d.cpty_cat != "mint_burn")], "Strictest: unlabeled, not high-volume, EOA-to-EOA"),
+        contrast(d[eoa & ~d.hv & (d.cpty_cat != "mint_burn")], "Endpoint: EOA-to-EOA, no high-volume address"),
+        contrast(d[(~eoa | d.hv) & (d.cpty_cat != "mint_burn")], "Endpoint: contract or high-volume address involved"),
     ]
     t2 = pd.DataFrame(rows)
     t2.to_csv(OUT + "T2_robustness.csv", index=False)
     say("## T2 Robustness: single-transfer coefficient (pp), issuer x size x month FE, HC1")
     say(t2.to_string(index=False))
+    say()
+
+    # ============================== T4 ==============================
+    vb = b[b.cpty_cat != "mint_burn"]
+    g = vb.groupby(["coin", "tx_type"])[["n", "n_whole", "sum_amt", "sum_amt_whole"]].sum()
+    t4 = pd.DataFrame({
+        "n_transfers": g.n,
+        "count_share_whole_pct": (g.n_whole / g.n * 100).round(2),
+        "usd_volume_bn": (g.sum_amt / 1e9).round(2),
+        "value_share_whole_pct": (g.sum_amt_whole / g.sum_amt * 100).round(2),
+    }).reset_index()
+    gb = vb.groupby(["tx_type", "size_bucket"])[["n", "n_whole", "sum_amt", "sum_amt_whole"]].sum()
+    t4b = pd.DataFrame({"count_share_whole_pct": (gb.n_whole / gb.n * 100).round(2),
+                        "value_share_whole_pct": (gb.sum_amt_whole / gb.sum_amt * 100).round(2),
+                        "usd_volume_share_pct": (gb.sum_amt / vb.sum_amt.sum() * 100).round(2)}).reset_index()
+    tot = vb[["sum_amt", "sum_amt_whole"]].sum()
+    single_whole_usd = vb.loc[vb.tx_type == "1_single", "sum_amt_whole"].sum()
+    t4.to_csv(OUT + "T4_value_weighted.csv", index=False)
+    t4b.to_csv(OUT + "T4b_value_weighted_by_size.csv", index=False)
+    say("## T4 Count- vs value-weighted whole-dollar shares (excl. mint/burn)")
+    say(t4.to_string(index=False))
+    say(f"Whole-dollar transfers = {tot.sum_amt_whole / tot.sum_amt * 100:.2f}% of USD volume; "
+        f"whole-dollar SINGLE transfers = {single_whole_usd / tot.sum_amt * 100:.2f}% of USD volume.")
+    say(t4b.to_string(index=False))
     say()
 
     # T3: composition of single transfers by counterparty
@@ -203,6 +223,18 @@ if b is not None:
     say(t3.to_string(index=False))
     say()
 
+    p = d[(d.cpty_cat == "psp") & (d.cpty_dir == "to")]
+    t3b = p.groupby("size_bucket")[["n", "n_whole", "n_cent", "n_x99"]].sum()
+    t3b["whole_dollar_pct"] = (t3b.n_whole / t3b.n * 100).round(2)
+    t3b["whole_cent_pct"] = (t3b.n_cent / t3b.n * 100).round(2)
+    ref = d[(d.cpty_cat == "unlabeled") & ~d.from_contract & ~d.to_contract & ~d.hv].groupby("size_bucket")[["n", "n_whole"]].sum()
+    t3b["ref_eoa_nonhub_unlabeled_whole_pct"] = (ref.n_whole / ref.n * 100).round(2)
+    t3b = t3b.reset_index()
+    t3b.to_csv(OUT + "T3b_psp_inflows_by_size.csv", index=False)
+    say("## T3b Transfers INTO payment-processor addresses (invoice settlement) by size")
+    say(t3b.to_string(index=False))
+    say()
+
     # direct vs contract-mediated singles, EOA/contract split (Referee 2)
     s1 = d[d.tx_type == "1_single"]
     t3c = s1.groupby(["direct_call", "from_contract", "to_contract"])[["n", "n_whole", "n_cent"]].sum()
@@ -214,14 +246,38 @@ if b is not None:
     say(t3c.to_string(index=False))
     say()
 
+# ============================== T6 ==============================
+c6 = load("R02c_cells_day_endpoint.csv")
+if c6 is not None:
+    rows = []
+    for ep in ["eoa_nonhub", "other"]:
+        e = prep(c6[c6.endpoint == ep]).copy()
+        e["g"] = e.coin + "|" + e.size_bucket + "|" + e.dt.astype(str)
+        r = cell_ols(e, "n", "n_whole", ["single"], absorb="g", cluster="dt")
+        sh = shares(e, "tx_type")
+        rows.append({"endpoint": ep, "coef_pp": round(r["beta"][0] * 100, 2), "se_pp_day_cluster": round(r["se"][0] * 100, 3),
+                     "whole_single_pct": round(sh.get("1_single", np.nan) * 100, 2),
+                     "whole_multi_pct": round(sh.get("2_multi", np.nan) * 100, 2),
+                     "n_transfers": int(e.n.sum()), "single_share_pct": round(e[e.tx_type == "1_single"].n.sum() / e.n.sum() * 100, 1)})
+    t6 = pd.DataFrame(rows)
+    t6.to_csv(OUT + "T6_endpoint_decomposition.csv", index=False)
+    say("## T6 Single-vs-multi contrast by endpoint type (issuer x size x day FE, day-clustered; excl. mint/burn)")
+    say(t6.to_string(index=False))
+    say()
+
 # ============================== T5 ==============================
 ext = [x for x in (load("R03_tron_cells.csv"), load("R04_polygon_cells.csv")) if x is not None]
 if ext:
     rows = []
-    if a is not None:   # Ethereum, same month (June 2025) from the day cells
-        e = a[pd.to_datetime(a.dt).dt.month == 6].copy()
-        e["chain"] = "ETHEREUM"
-        ext = [e] + ext
+    # Ethereum comparators (2025 and June 2025), excluding mint/burn so USD shares are not driven
+    # by the erroneous ~$300tn PYUSD mint/burn; prefer R02c (excl. mint/burn), else R02a.
+    src = load("R02c_cells_day_endpoint.csv")
+    src = (src.groupby(["dt", "coin", "tx_type", "size_bucket"], as_index=False)
+           [["n", "n_whole", "sum_amt", "sum_amt_whole"]].sum()) if src is not None else a
+    if src is not None:
+        e = src.copy(); e["chain"] = "ETHEREUM (2025, excl. mint/burn)"
+        e6 = src[pd.to_datetime(src.dt).dt.month == 6].copy(); e6["chain"] = "ETHEREUM (Jun 2025, excl. mint/burn)"
+        ext = [e, e6] + ext
     for x in ext:
         for (ch, cn), s in x.groupby(["chain", "coin"]):
             sd = prep(s)
@@ -243,7 +299,7 @@ if ext:
             rows.append(row)
     t5 = pd.DataFrame(rows)
     t5.to_csv(OUT + "T5_cross_chain.csv", index=False)
-    say("## T5 Cross-chain replication, June 2025")
+    say("## T5 Cross-chain replication (Tron/Polygon period as set in R03/R04)")
     say(t5.to_string(index=False))
     say()
 
