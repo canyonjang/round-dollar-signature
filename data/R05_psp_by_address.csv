@@ -1,0 +1,66 @@
+address,name_tag,tx_type,size_bucket,n,n_whole,n_cent
+0x2730ef3c0c180e7f7bcfca249c757421b208e333,BitPay 2,1_single,0_sub1,129,0,3
+0x2730ef3c0c180e7f7bcfca249c757421b208e333,BitPay 2,1_single,2_10-100,5,2,5
+0x2730ef3c0c180e7f7bcfca249c757421b208e333,BitPay 2,1_single,3_100-1k,8,1,8
+0x2730ef3c0c180e7f7bcfca249c757421b208e333,BitPay 2,1_single,4_1k-10k,102,1,101
+0x2730ef3c0c180e7f7bcfca249c757421b208e333,BitPay 2,1_single,5_10k-100k,372,11,368
+0x2730ef3c0c180e7f7bcfca249c757421b208e333,BitPay 2,1_single,6_100k+,255,0,250
+0x2730ef3c0c180e7f7bcfca249c757421b208e333,BitPay 2,2_multi,0_sub1,31,0,0
+0x340e89b00db70ab9cf3fabb42a3e5b3ead26d17f,Zovix: Hot Wallet 1,1_single,0_sub1,15,0,1
+0x340e89b00db70ab9cf3fabb42a3e5b3ead26d17f,Zovix: Hot Wallet 1,1_single,2_10-100,5,1,2
+0x340e89b00db70ab9cf3fabb42a3e5b3ead26d17f,Zovix: Hot Wallet 1,1_single,3_100-1k,19,1,1
+0x340e89b00db70ab9cf3fabb42a3e5b3ead26d17f,Zovix: Hot Wallet 1,1_single,4_1k-10k,3,2,2
+0x340e89b00db70ab9cf3fabb42a3e5b3ead26d17f,Zovix: Hot Wallet 1,2_multi,0_sub1,6,0,0
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,1_single,0_sub1,3,0,0
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,1_single,1_1-10,630,225,630
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,1_single,2_10-100,3231,895,3231
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,1_single,3_100-1k,3730,1301,3728
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,1_single,4_1k-10k,2843,1007,2843
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,1_single,5_10k-100k,991,109,991
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,1_single,6_100k+,229,22,229
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,2_multi,0_sub1,18,0,0
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,2_multi,1_1-10,14,6,14
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,2_multi,2_10-100,56,34,56
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,2_multi,3_100-1k,39,23,39
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,2_multi,4_1k-10k,16,8,16
+0x34e158883efc81c5d92fde785fba48db738711ee,BitPay: Invoice,2_multi,5_10k-100k,2,0,2
+0x52de8d3febd3a06d3c627f59d56e6892b80dcf12,BitPay: Invoice 2,1_single,3_100-1k,1,0,0
+0x76b8c86e26ce0b8da968b37ab97b4b80481209db,Upay: Hot Wallet 7,1_single,0_sub1,93,0,6
+0x76b8c86e26ce0b8da968b37ab97b4b80481209db,Upay: Hot Wallet 7,1_single,1_1-10,14,2,9
+0x76b8c86e26ce0b8da968b37ab97b4b80481209db,Upay: Hot Wallet 7,1_single,2_10-100,69,29,35
+0x76b8c86e26ce0b8da968b37ab97b4b80481209db,Upay: Hot Wallet 7,1_single,3_100-1k,104,52,57
+0x76b8c86e26ce0b8da968b37ab97b4b80481209db,Upay: Hot Wallet 7,1_single,4_1k-10k,14,4,6
+0x76b8c86e26ce0b8da968b37ab97b4b80481209db,Upay: Hot Wallet 7,1_single,5_10k-100k,9,1,6
+0x76b8c86e26ce0b8da968b37ab97b4b80481209db,Upay: Hot Wallet 7,1_single,6_100k+,1,0,0
+0x76b8c86e26ce0b8da968b37ab97b4b80481209db,Upay: Hot Wallet 7,2_multi,0_sub1,1049,0,0
+0x7772fe062c2b6ac0c0f83ca4948177be4889b1b3,AlphaPo: Hot Wallet 4,1_single,0_sub1,381,0,1
+0x7772fe062c2b6ac0c0f83ca4948177be4889b1b3,AlphaPo: Hot Wallet 4,1_single,1_1-10,22145,1835,5204
+0x7772fe062c2b6ac0c0f83ca4948177be4889b1b3,AlphaPo: Hot Wallet 4,1_single,2_10-100,156526,16920,30205
+0x7772fe062c2b6ac0c0f83ca4948177be4889b1b3,AlphaPo: Hot Wallet 4,1_single,3_100-1k,110207,21609,32631
+0x7772fe062c2b6ac0c0f83ca4948177be4889b1b3,AlphaPo: Hot Wallet 4,1_single,4_1k-10k,17083,6476,8812
+0x7772fe062c2b6ac0c0f83ca4948177be4889b1b3,AlphaPo: Hot Wallet 4,1_single,5_10k-100k,2253,917,1474
+0x7772fe062c2b6ac0c0f83ca4948177be4889b1b3,AlphaPo: Hot Wallet 4,1_single,6_100k+,1115,593,794
+0x7772fe062c2b6ac0c0f83ca4948177be4889b1b3,AlphaPo: Hot Wallet 4,2_multi,0_sub1,347,0,0
+0x7772fe062c2b6ac0c0f83ca4948177be4889b1b3,AlphaPo: Hot Wallet 4,2_multi,2_10-100,1,0,0
+0x9a10da8ce77f26231860764a2caab36e70584c4b,AlphaPo: Hot Wallet 3,1_single,0_sub1,67,0,14
+0x9a10da8ce77f26231860764a2caab36e70584c4b,AlphaPo: Hot Wallet 3,1_single,1_1-10,19039,1940,5321
+0x9a10da8ce77f26231860764a2caab36e70584c4b,AlphaPo: Hot Wallet 3,1_single,2_10-100,217646,17117,30224
+0x9a10da8ce77f26231860764a2caab36e70584c4b,AlphaPo: Hot Wallet 3,1_single,3_100-1k,170556,26933,40691
+0x9a10da8ce77f26231860764a2caab36e70584c4b,AlphaPo: Hot Wallet 3,1_single,4_1k-10k,28523,9190,12557
+0x9a10da8ce77f26231860764a2caab36e70584c4b,AlphaPo: Hot Wallet 3,1_single,5_10k-100k,2757,1192,1702
+0x9a10da8ce77f26231860764a2caab36e70584c4b,AlphaPo: Hot Wallet 3,1_single,6_100k+,1038,643,767
+0x9a10da8ce77f26231860764a2caab36e70584c4b,AlphaPo: Hot Wallet 3,2_multi,0_sub1,1,0,1
+0x9a10da8ce77f26231860764a2caab36e70584c4b,AlphaPo: Hot Wallet 3,2_multi,3_100-1k,1,0,0
+0xaa5b229f5bc4324097ddf0be6d02ee12c488c3f8,AlphaPo: Deposit Funder 2,1_single,2_10-100,3,0,0
+0xaa5b229f5bc4324097ddf0be6d02ee12c488c3f8,AlphaPo: Deposit Funder 2,1_single,3_100-1k,44,0,0
+0xaa5b229f5bc4324097ddf0be6d02ee12c488c3f8,AlphaPo: Deposit Funder 2,2_multi,2_10-100,15,0,0
+0xaa5b229f5bc4324097ddf0be6d02ee12c488c3f8,AlphaPo: Deposit Funder 2,2_multi,3_100-1k,2,0,0
+0xf2a14015eaa3f9cc987f2c3b62fc93eee41aa5d0,BitPay 1,1_single,0_sub1,50,0,0
+0xf2a14015eaa3f9cc987f2c3b62fc93eee41aa5d0,BitPay 1,1_single,4_1k-10k,8,8,8
+0xf2a14015eaa3f9cc987f2c3b62fc93eee41aa5d0,BitPay 1,1_single,5_10k-100k,3,2,2
+0xf2a14015eaa3f9cc987f2c3b62fc93eee41aa5d0,BitPay 1,1_single,6_100k+,1,1,1
+0xf2a14015eaa3f9cc987f2c3b62fc93eee41aa5d0,BitPay 1,2_multi,0_sub1,12,0,0
+0xf2a14015eaa3f9cc987f2c3b62fc93eee41aa5d0,BitPay 1,2_multi,3_100-1k,6,1,1
+0xf2a14015eaa3f9cc987f2c3b62fc93eee41aa5d0,BitPay 1,2_multi,4_1k-10k,15,12,12
+0xf2a14015eaa3f9cc987f2c3b62fc93eee41aa5d0,BitPay 1,2_multi,5_10k-100k,143,140,140
+0xf2a14015eaa3f9cc987f2c3b62fc93eee41aa5d0,BitPay 1,2_multi,6_100k+,5,4,4
