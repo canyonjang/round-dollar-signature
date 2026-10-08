@@ -41,6 +41,27 @@ To regenerate the data from source, run each file in `queries/` in the BigQuery 
 | 06 | data/06_exact_simple.csv | Supplement S1 |
 | 07 | data/07_exclude_zero_address.csv | Supplement S5 (mint/burn robustness) |
 
+## Revision analyses (round 1)
+
+Additional exhibits requested in peer review. Run order and cost notes: `REVISION_RUNBOOK_KO.md`.
+
+| Query / script | Output | Purpose |
+|---|---|---|
+| `code/build_labels.py` | `data/labels_eth_mainnet.csv` | Categorised Etherscan name tags (from dawsbot/eth-labels, MIT, commit d9b21ae): payment processors, issuers, exchanges, DeFi/bridges/MEV, other |
+| R00 | (metadata) | Column check for Tron/Polygon `logs` (Google Blockchain Analytics) |
+| R01 | table `eth_cells2025` | Single scan of 2025 transfers -> day-level cells with call type (direct wallet call vs contract-mediated), EOA/contract status, counterparty label, high-volume-address flag |
+| R02a | `data/R02a_cells_day.csv` | Day x coin x type x size cells (day FE, issuer x size x day FE, day-clustered SEs, value weighting) |
+| R02b | `data/R02b_cells_attr.csv` | Month x attribute cells (robustness, label composition, whole-cent and $X.99 shares) |
+| R03 | `data/R03_tron_cells.csv` | Tron USDT replication, June 2025 |
+| R04 (optional) | `data/R04_polygon_cells.csv` | Polygon USDC/USDT replication, June 2025 |
+| `code/cellreg.py` | — | Exact transfer-level OLS/WLS from cell totals; HC1 and cluster-robust SEs; absorbed FE |
+| `code/test_cellreg.py` | — | Reproduces Table 1 and matches micro-level OLS/WLS on simulated data |
+| `code/rev_tables.py` | `figures/rev/T1–T5`, `revision_results.md` | Revision tables |
+
+Because every regressor is constant within a cell, the transfer-level LPM is recovered exactly from
+cell totals (n, n_whole, USD value, USD value of whole-dollar transfers); `test_cellreg.py` verifies
+this against micro-level OLS, including day-clustered standard errors and absorbed fixed effects.
+
 ## Citation
 
 If you use this package, please cite the paper (citation to be added upon publication) and this repository.
