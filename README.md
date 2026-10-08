@@ -1,6 +1,6 @@
 # The Round-Dollar Signature — Replication Package
 
-Replication code and data for *"The Round-Dollar Signature: A Label-Free Marker of Payment-Like Stablecoin Transfers."*
+Replication code and data for *"The Round-Dollar Signature: Round-Number Clustering in Stablecoin Transfer Amounts."*
 
 This package reproduces every table and figure in the paper and online supplement. All analysis uses the **public** `bigquery-public-data.crypto_ethereum` dataset on Google BigQuery — no proprietary data and no address labels are used, so every result is independently verifiable from the SQL below.
 

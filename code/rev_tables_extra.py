@@ -1,4 +1,4 @@
-"""Additional revision exhibits requested in the pre-submission review.
+"""Additional revision exhibits requested in peer review (round 1).
 
   T7  Value-weighted single-transfer coefficient: sensitivity to the largest transfers and by issuer
       (R02c day cells, excl. mint/burn; day FE; day-clustered SEs).
