@@ -84,4 +84,4 @@ Code and documentation released under the MIT License (see `LICENSE`).
 
 ## Disclosure
 
-AI tools (Claude, Anthropic) were used for code testing and editing.
+The author used Claude (Anthropic; Opus 4.8 and Opus 5.5) for coding assistance, code testing and language editing. The author reviewed and verified all AI-assisted outputs.
