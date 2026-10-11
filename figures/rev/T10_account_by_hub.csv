@@ -1,0 +1,5 @@
+accounts,hub,whole_single_pct,whole_multi_pct,coef_pp,transfers_m,share_pct
+contract involved,no hub,39.0,25.5,12.8,6.1,3.3
+contract involved,hub involved,20.2,10.5,9.7,97.8,52.7
+EOA to EOA,no hub,48.1,52.3,-8.2,33.2,17.9
+EOA to EOA,hub involved,28.6,18.1,8.4,48.6,26.2

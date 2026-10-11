@@ -1,0 +1,12 @@
+sample,coef_pp,se_pp,whole_single_pct,whole_multi_pct,n_transfers,share_of_full_sample_pct
+Full sample (>= $1),21.5,0.006,33.39,11.7,186920533,100.0
+Excl. mint/burn,21.59,0.006,33.4,11.6,185723913,99.4
+Excl. exchange & issuer counterparties,22.07,0.0063,33.38,11.07,169671324,90.8
+Unlabeled counterparties only,20.66,0.0088,35.88,14.48,108141875,57.9
+"Excl. 1,000 most active senders/recipients",13.7,0.0268,47.08,31.24,39531928,21.1
+EOA-to-EOA transfers only,8.57,0.025,36.65,25.72,82095204,43.9
+Single = direct wallet call only (vs multi),25.84,0.0066,37.11,11.7,165992680,88.8
+Single = contract-mediated only (vs multi),7.14,0.0094,18.76,11.7,104603076,56.0
+"Strictest: unlabeled, not high-volume, EOA-to-EOA",-8.83,0.0587,48.14,53.02,32841093,17.6
+"Endpoint: EOA-to-EOA, no high-volume address",-8.21,0.0582,48.07,52.29,33151994,17.7
+Endpoint: contract or high-volume address involved,15.34,0.0064,26.66,11.22,152571919,81.6

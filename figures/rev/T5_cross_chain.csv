@@ -1,0 +1,8 @@
+chain,coin,n_transfers,single_share_of_transfers_pct,whole_single_pct,whole_multi_pct,lpm_single_pp_sizeFE,se_pp,value_share_whole_pct,single_n_whole_pct,single_n_half_pct,single_n_37_pct,single_n_123456_pct
+"ETHEREUM (2025, excl. mint/burn)",PYUSD,1446810,80.0,41.92,14.35,24.0,0.0959,40.12,,,,
+"ETHEREUM (2025, excl. mint/burn)",USDC,101244950,43.2,28.81,10.3,19.13,0.0089,24.66,,,,
+"ETHEREUM (2025, excl. mint/burn)",USDT,121088309,58.2,30.21,7.19,23.89,0.008,34.46,,,,
+"ETHEREUM (Jun 2025, excl. mint/burn)",PYUSD,118010,87.1,52.59,14.74,31.15,0.3879,55.31,,,,
+"ETHEREUM (Jun 2025, excl. mint/burn)",USDC,6808482,47.5,29.72,11.23,19.56,0.0337,31.35,,,,
+"ETHEREUM (Jun 2025, excl. mint/burn)",USDT,7769452,63.4,30.66,8.66,23.81,0.0324,43.73,,,,
+TRON,USDT,823555852,98.3,54.99,59.19,-10.5,0.015,74.52,54.995,1.8861,0.1599,0.0004
