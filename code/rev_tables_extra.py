@@ -4,6 +4,7 @@
       (R02c day cells, excl. mint/burn; day FE; day-clustered SEs).
   T8  Transfers into payment-processor addresses by processor, with leave-one-out shares (R05).
   T9  Reconciliation of mint/burn-excluded counts in Tables S5 (query 07) and S7 (R02b).
+  T10 Account type x hub involvement (R02b; Table S8, Panel B).
 Run: python rev_tables_extra.py
 """
 import os
@@ -73,3 +74,24 @@ t9 = pd.DataFrame({"S5_query07": s5, "S7_R02b": s7})
 t9["difference"] = t9.S5_query07 - t9.S7_R02b
 t9.reset_index().to_csv(OUT + "T9_s5_s7_reconciliation.csv", index=False)
 print("## T9 S5 vs S7 counts (same total; transaction structure defined before vs after dropping mint/burn legs)\n", t9)
+
+# ---------------- T10
+# Account type x hub involvement (R02b month cells, >= $1, excl. mint/burn): shares and single-transfer
+# coefficient with issuer x size x month FE (descriptive; month cells allow no day-clustered inference).
+b = pd.read_csv(D + "R02b_cells_attr.csv")
+b = b[(b.cpty_cat != "mint_burn") & (b.size_bucket != "0_sub1")].copy()
+b["single"] = (b.tx_type == "1_single").astype(float)
+b["cell"] = b.coin + b.size_bucket + b.month.astype(str)
+rows = []
+for (eoa, hub), x in b.assign(eoa2eoa=~(b.from_contract | b.to_contract)).groupby(["eoa2eoa", "hv"]):
+    x = x.groupby(["cell", "single"], as_index=False)[["n", "n_whole"]].sum()
+    r = cell_ols(x, "n", "n_whole", ["single"], absorb="cell", hc1=True)  # SE not reported
+    s1, m1 = x[x.single == 1], x[x.single == 0]
+    rows.append({"accounts": "EOA to EOA" if eoa else "contract involved", "hub": "hub involved" if hub else "no hub",
+                 "whole_single_pct": round(s1.n_whole.sum() / s1.n.sum() * 100, 1),
+                 "whole_multi_pct": round(m1.n_whole.sum() / m1.n.sum() * 100, 1),
+                 "coef_pp": round(r["beta"][0] * 100, 1), "transfers_m": round(x.n.sum() / 1e6, 1),
+                 "share_pct": round(x.n.sum() / b.n.sum() * 100, 1)})
+t10 = pd.DataFrame(rows)
+t10.to_csv(OUT + "T10_account_by_hub.csv", index=False)
+print("## T10 account type x hub involvement\n", t10.to_string(index=False))

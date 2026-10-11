@@ -30,8 +30,10 @@ for i,c in enumerate(ORDER):
     r = agg.loc[agg.coin==c, denoms].values.flatten()
     ax.bar(x+(i-1)*w, r, w, label=c, color=C[c], edgecolor="white", linewidth=0.5)
     ax2.bar(x+(i-1)*w, r, w, color=C[c], edgecolor="white", linewidth=0.5)
-ax.axhline(0.0001, ls=":", lw=1, color="0.4", label="benchmark 1/10⁶")
-ax.set_yscale("log"); ax.set_ylim(5e-5, 2000)
+for k in range(len(denoms)):                       # uniform-residue benchmark differs by threshold
+    ax.hlines(1e-4/10**k, k-0.45, k+0.45, ls=":", lw=1.2, color="0.3",
+              label="uniform benchmark (1/10⁶ … 1/10⁹)" if k == 0 else None)
+ax.set_yscale("log"); ax.set_ylim(3e-8, 2000)
 for a_ in (ax,ax2):
     a_.set_xticks(x); a_.set_xticklabels(dlab, fontsize=9); a_.set_xlabel("amount is a multiple of", fontsize=9)
 ax.set_ylabel("Share of transfers (%)")

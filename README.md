@@ -59,7 +59,7 @@ Additional exhibits requested in peer review. Run order and cost notes: `REVISIO
 | `code/cellreg.py` | — | Exact transfer-level OLS/WLS from cell totals; HC1 and cluster-robust SEs; absorbed FE |
 | `code/test_cellreg.py` | — | Reproduces the original Table 1 and matches transfer-level OLS/WLS on simulated data |
 | `code/rev_tables.py` | `figures/rev/T1–T6`, `revision_results.md` | Revised Table 1, robustness, label composition, value weighting, cross-chain, endpoint decomposition |
-| `code/rev_tables_extra.py` | `figures/rev/T7–T9` | Value-weighted sensitivity, processor leave-one-out, S5/S7 count reconciliation |
+| `code/rev_tables_extra.py` | `figures/rev/T7–T10` | Value-weighted sensitivity, processor leave-one-out, S5/S7 count reconciliation, account type × hub involvement |
 | `code/make_figs.py` | `figures/fig1–3` | Figures 1–3 (Figure 3 includes Tron when R03 output is present) |
 
 Because every regressor is constant within a cell, the transfer-level LPM is recovered exactly from
